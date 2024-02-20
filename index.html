@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winss's Site</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            position: relative;
+        }
+
+        .container {
+            width: 50%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(0, 0, 0, 0.3),
+                0 0 80px rgba(0, 0, 0, 0.3),
+                0 0 120px rgba(0, 0, 0, 0.3),
+                0 0 160px rgba(0, 0, 0, 0.3);
+            animation: breathe 8s infinite;
+            position: relative;
+        }
+
+        /* Green button styles */
+        .green-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .cheese-button {
+            background-color: #f9b02e;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                box-shadow:
+                    0 0 40px rgba(72, 240, 76, 0.3),
+                    0 0 80px rgba(72, 240, 76, 0.3),
+                    0 0 120px rgba(7, 247, 37, 0.3),
+                    0 0 160px rgba(7, 247, 37, 0.3);
+            }
+            20% {
+                box-shadow:
+                    0 0 40px rgba(63, 255, 199, 0.3),
+                    0 0 80px rgba(63, 255, 199, 0.3),
+                    0 0 120px rgba(72, 240, 76, 0.3),
+                    0 0 160px rgba(72, 240, 76, 0.3);
+            }
+            40% {
+                box-shadow:
+                    0 0 40px rgba(76, 201, 240, 0.3),
+                    0 0 80px rgba(76, 201, 240, 0.3),
+                    0 0 120px rgba(63, 255, 199, 0.3),
+                    0 0 160px rgba(63, 255, 199, 0.3);
+            }
+            60% {
+                box-shadow:
+                    0 0 40px rgba(67, 97, 206, 0.3),
+                    0 0 80px rgba(67, 97, 206, 0.3),
+                    0 0 120px rgba(76, 201, 240, 0.3),
+                    0 0 160px rgba(76, 201, 240, 0.3);
+            }
+            80% {
+                box-shadow:
+                    0 0 40px rgba(86, 11, 173, 0.3),
+                    0 0 80px rgba(86, 11, 173, 0.3),
+                    0 0 120px rgba(63, 55, 201, 0.3),
+                    0 0 160px rgba(67, 97, 206, 0.3);
+            }
+        }
+
+        /* Dot styles */
+        .dot {
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            animation: moveDots 10s linear infinite;
+        }
+
+        @keyframes moveDots {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+
+        .dot:nth-child(1) { left: 10%; bottom: -10vh; animation-delay: 0s; }
+        .dot:nth-child(2) { left: 20%; bottom: -10vh; animation-delay: 1s; }
+        .dot:nth-child(3) { left: 30%; bottom: -10vh; animation-delay: 2s; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+<div class="container">
+    <h2>Welcome to My site!</h2>
+    <p>This is a Work in progress</p>
+    <p>Things will change</p>
+    <div class="button-container">
+        <a href="https://https://www.youtube.com/watch?v=oqwSA8KBIHk" target="_blank"><button class="green-button cheese-button">🧀</button></a>
+        <a href="green-button" href="https://i.imgur.com/SZMm14d.mp4" target="_blank">🤨</a>
+    </div>
+</div>
+<script>
+    for (let i = 0; i < 50; i++) {
+        let dot = document.createElement('div');
+        dot.classList.add('dot');
+        let position = Math.floor(Math.random() * 100);
+        dot.style.left = position + '%';
+        dot.style.bottom = -(Math.random() * 100) + 'vh';
+        dot.style.animationDelay = Math.random() * 10 + 's';
+        document.body.appendChild(dot);
+    }
+</script>
+</body>
+</html>
