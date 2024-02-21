@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🐍</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    .container {
+      width: 50%;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 
+        0 0 40px rgba(72, 240, 76, 0.3), 
+        0 0 80px rgba(72, 240, 76, 0.3), 
+        0 0 120px rgba(7, 247, 37, 0.3), 
+        0 0 160px rgba(7, 247, 37, 0.3);
+      animation: breathe 8s infinite;
+      position: relative;
+    }
+
+    canvas {
+      background-color: white;
+      border: 4px solid black;
+    }
+
+    #score {
+      margin-top: 20px;
+      color: black;
+      font-size: 24px;
+    }
+
+    h1 {
+      font-size: 48px;
+    }
+
+    .button-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .green-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px; 
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .green-button:hover {
+      background-color: #45a049;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        box-shadow:
+          0 0 40px rgba(72, 240, 76, 0.3),
+          0 0 80px rgba(72, 240, 76, 0.3),
+          0 0 120px rgba(7, 247, 37, 0.3),
+          0 0 160px rgba(7, 247, 37, 0.3);
+      }
+      20% {
+        box-shadow:
+          0 0 40px rgba(63, 255, 199, 0.3),
+          0 0 80px rgba(63, 255, 199, 0.3),
+          0 0 120px rgba(72, 240, 76, 0.3),
+          0 0 160px rgba(72, 240, 76, 0.3);
+      }
+      40% {
+        box-shadow:
+          0 0 40px rgba(76, 201, 240, 0.3),
+          0 0 80px rgba(76, 201, 240, 0.3),
+          0 0 120px rgba(63, 255, 199, 0.3),
+          0 0 160px rgba(63, 255, 199, 0.3);
+      }
+      60% {
+        box-shadow:
+          0 0 40px rgba(67, 97, 206, 0.3),
+          0 0 80px rgba(67, 97, 206, 0.3),
+          0 0 120px rgba(76, 201, 240, 0.3),
+          0 0 160px rgba(76, 201, 240, 0.3);
+      }
+      80% {
+        box-shadow:
+          0 0 40px rgba(86, 11, 173, 0.3),
+          0 0 80px rgba(86, 11, 173, 0.3),
+          0 0 120px rgba(63, 55, 201, 0.3),
+          0 0 160px rgba(67, 97, 206, 0.3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🐍</h1>
+<div class="button-container">
+  <a href="https://win-ss.github.io"><button class="green-button">&#9664;</button></a>
+</div>
+
+    <canvas width="400" height="400" id="game"></canvas>
+    <div id="score">Score: 0</div>
+  </div>
+
+  <script>
+    var canvas = document.getElementById('game');
+    var context = canvas.getContext('2d');
+
+    var grid = 16;
+    var count = 0;
+    var score = 0;
+    var speed = 16;
+    
+    var snake = {
+      x: 160,
+      y: 160,
+      dx: grid,
+      dy: 0,
+      cells: [],
+      maxCells: 4
+    };
+    var apple = {
+      x: 320,
+      y: 320
+    };
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function loop() {
+      requestAnimationFrame(loop);
+
+      if (++count < speed) {
+        return;
+      }
+
+      count = 0;
+      context.clearRect(0,0,canvas.width,canvas.height);
+
+      snake.x += snake.dx;
+      snake.y += snake.dy;
+
+      if (snake.x < 0) {
+        snake.x = canvas.width - grid;
+      }
+      else if (snake.x >= canvas.width) {
+        snake.x = 0;
+      }
+      
+      if (snake.y < 0) {
+        snake.y = canvas.height - grid;
+      }
+      else if (snake.y >=canvas.height) {
+        snake.y = 0;
+      }
+
+      snake.cells.unshift({x: snake.x, y: snake.y});
+
+      if (snake.cells.length > snake.maxCells) {
+        snake.cells.pop();
+      }
+
+      context.fillStyle = 'red';
+      context.fillRect(apple.x, apple.y, grid-1, grid-1);
+
+      context.fillStyle = 'black';
+      snake.cells.forEach(function(cell, index) {
+        context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+
+        if (cell.x === apple.x && cell.y === apple.y) {
+          snake.maxCells++;
+          score++;
+          document.getElementById('score').innerText = 'Score: ' + score;
+          apple.x = getRandomInt(0, 25) * grid;
+          apple.y = getRandomInt(0, 25) * grid;
+        }
+
+        for (var i = index + 1; i < snake.cells.length; i++) {
+          if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+            snake.x = 160;
+            snake.y = 160;
+            snake.cells = [];
+            snake.maxCells = 4;
+            snake.dx = grid;
+            snake.dy = 0;
+            score = 0;
+            document.getElementById('score').innerText = 'Score: ' + score;
+            apple.x = getRandomInt(0, 25) * grid;
+            apple.y = getRandomInt(0, 25) * grid;
+          }
+        }
+      });
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.which === 37 && snake.dx === 0) {
+        snake.dx = -grid;
+        snake.dy = 0;
+      }
+      else if (e.which === 38 && snake.dy === 0) {
+        snake.dy = -grid;
+        snake.dx = 0;
+      }
+      else if (e.which === 39 && snake.dx === 0) {
+        snake.dx = grid;
+        snake.dy = 0;
+      }
+      else if (e.which === 40 && snake.dy === 0) {
+        snake.dy = grid;
+        snake.dx = 0;
+      }
+    });
+
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
