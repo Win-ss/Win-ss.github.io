@@ -233,6 +233,54 @@
       }
     });
 
+    var startX, startY, endX, endY;
+    document.getElementById('game').addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    document.getElementById('game').addEventListener('touchmove', function(e) {
+      endX = e.touches[0].clientX;
+      endY = e.touches[0].clientY;
+    });
+
+    document.getElementById('game').addEventListener('touchend', function(e) {
+      var deltaX = endX - startX;
+      var deltaY = endY - startY;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        // swipe
+        if (deltaX > 0) {
+          // right
+          if (snake.dx === 0) {
+            snake.dx = grid;
+            snake.dy = 0;
+          }
+        } else {
+          // left
+          if (snake.dx === 0) {
+            snake.dx = -grid;
+            snake.dy = 0;
+          }
+        }
+      } else {
+        // vertical swipe
+        if (deltaY > 0) {
+          //down
+          if (snake.dy === 0) {
+            snake.dy = grid;
+            snake.dx = 0;
+          }
+        } else {
+          //up
+          if (snake.dy === 0) {
+            snake.dy = -grid;
+            snake.dx = 0;
+          }
+        }
+      }
+    });
+
     // Disable right-click
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
