@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥐🥪🥖🧁🍰<</title>
+    <style>
+        @keyframes breathe {
+            0% {
+                box-shadow: 0 0 5px rgba(238, 192, 123, 0.3), 0 0 10px rgba(240, 209, 160, 0.3), 0 0 15px rgba(216, 196, 170, 0.3), 0 0 20px rgba(66, 35, 8, 0.3); /* Initial glow colors */
+            }
+            10% {
+                box-shadow: 0 0 10px rgba(238, 192, 123, 0.5), 0 0 15px rgba(240, 209, 160, 0.5), 0 0 20px rgba(216, 196, 170, 0.5), 0 0 25px rgba(66, 35, 8, 0.5); /* Intermediate glow colors */
+            }
+            20% {
+                box-shadow: 0 0 15px rgba(238, 192, 123, 0.7), 0 0 20px rgba(240, 209, 160, 0.7), 0 0 25px rgba(216, 196, 170, 0.7), 0 0 30px rgba(66, 35, 8, 0.7); /* Intermediate glow colors */
+            }
+            30% {
+                box-shadow: 0 0 20px rgba(238, 192, 123, 0.9), 0 0 25px rgba(240, 209, 160, 0.9), 0 0 30px rgba(216, 196, 170, 0.9), 0 0 35px rgba(66, 35, 8, 0.9); /* Intermediate glow colors */
+            }
+            40% {
+                box-shadow: 0 0 25px rgba(238, 192, 123, 0.8), 0 0 30px rgba(240, 209, 160, 0.8), 0 0 35px rgba(216, 196, 170, 0.8), 0 0 40px rgba(66, 35, 8, 0.8); /* Intermediate glow colors */
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(238, 192, 123, 0.7), 0 0 35px rgba(240, 209, 160, 0.7), 0 0 40px rgba(216, 196, 170, 0.7), 0 0 45px rgba(66, 35, 8, 0.7); /* Intermediate glow colors */
+            }
+            60% {
+                box-shadow: 0 0 35px rgba(238, 192, 123, 0.6), 0 0 40px rgba(240, 209, 160, 0.6), 0 0 45px rgba(216, 196, 170, 0.6), 0 0 50px rgba(66, 35, 8, 0.6); /* Intermediate glow colors */
+            }
+            70% {
+                box-shadow: 0 0 40px rgba(238, 192, 123, 0.5), 0 0 45px rgba(240, 209, 160, 0.5), 0 0 50px rgba(216, 196, 170, 0.5), 0 0 55px rgba(66, 35, 8, 0.5); /* Intermediate glow colors */
+            }
+            80% {
+                box-shadow: 0 0 45px rgba(238, 192, 123, 0.4), 0 0 50px rgba(240, 209, 160, 0.4), 0 0 55px rgba(216, 196, 170, 0.4), 0 0 60px rgba(66, 35, 8, 0.4); /* Intermediate glow colors */
+            }
+            90% {
+                box-shadow: 0 0 50px rgba(238, 192, 123, 0.3), 0 0 55px rgba(240, 209, 160, 0.3), 0 0 60px rgba(216, 196, 170, 0.3), 0 0 65px rgba(66, 35, 8, 0.3); /* Intermediate glow colors */
+            }
+            100% {
+                box-shadow: 0 0 55px rgba(238, 192, 123, 0.2), 0 0 60px rgba(240, 209, 160, 0.2), 0 0 65px rgba(216, 196, 170, 0.2), 0 0 70px rgba(66, 35, 8, 0.2); /* Strongest glow colors */
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+            user-select: none; 
+            -webkit-user-select: none; 
+            -moz-user-select: none; 
+            -ms-user-select: none; 
+            -o-user-select: none; 
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            animation: breathe 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+        }
+
+        .bread-names {
+            margin-top: 20px;
+        }
+
+        .bread-name {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            animation: moveDots 10s linear infinite;
+        }
+
+        @keyframes moveDots {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+
+        .dot:nth-child(1) { left: 10%; bottom: -10vh; animation-delay: 0s; }
+        .dot:nth-child(2) { left: 20%; bottom: -10vh; animation-delay: 1s; }
+        .dot:nth-child(3) { left: 30%; bottom: -10vh; animation-delay: 2s; }
+        .dot:nth-child(4) { left: 40%; bottom: -10vh; animation-delay: 3s; }
+        .dot:nth-child(5) { left: 50%; bottom: -10vh; animation-delay: 4s; }
+        .dot:nth-child(6) { left: 60%; bottom: -10vh; animation-delay: 5s; }
+        .dot:nth-child(7) { left: 70%; bottom: -10vh; animation-delay: 6s; }
+        .dot:nth-child(8) { left: 80%; bottom: -10vh; animation-delay: 7s; }
+        .dot:nth-child(9) { left: 90%; bottom: -10vh; animation-delay: 8s; }
+        .dot:nth-child(10) { left: 100%; bottom: -10vh; animation-delay: 9s; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>🥐🥪🥖🧁🍰</h2>
+    <div class="bread-names" id="breadNamesContainer">
+    </div>
+    <div class="click-for-more">(Click anywhere for more pastry)</div>
+</div>
+
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+
+<script>
+    var breadlist = [
+      "Baguette",
+      "Ciabatta",
+      "Sourdough",
+      "Rye",
+      "Whole Wheat",
+      "Chinese flaky pastry",
+      "Choux pastry",
+      "Filo",
+      "Flaky pastry",
+      "Hot water crust pastry",
+      "Pan dulce",
+      "Puff pastry",
+      "Shortcrust pastry",
+      "Beignet",
+      "Bossche bol",
+      "Chouquette",
+      "Croquembouche",
+      "Éclair",
+      "Gougère",
+      "Karpatka",
+      "Lady's navel",
+      "Moorkop",
+      "Nun's puffs",
+      "Paris-Brest",
+      "Pommes dauphine",
+      "Profiterole",
+      "Religieuse",
+      "St. Honoré cake",
+      "Beef Wellington",
+      "Cheese straw",
+      "Croline",
+      "Croissants",
+      "Galette des rois",
+      "Jambon",
+      "Miguelitos",
+      "Mille-feuille",
+      "Palmier",
+      "Pastel de nata",
+      "Pithivier",
+      "Sausage roll",
+      "Steak and kidney pie",
+      "Strudel",
+      "Tarte conversation",
+      "Tarte Tatin",
+      "Torpedo dessert",
+      "Turnovers",
+      "Chatti pathiri",
+      "Hamantash",
+      "Kifli",
+      "Kolach",
+      "Kūčiukai",
+      "Međimurska gibanica",
+      "Nunt",
+      "Nut roll",
+      "Poppy seed roll",
+      "Prekmurska gibanica",
+      "Rugelach",
+      "St. Martin's croissant",
+      "Alexandertorte",
+      "Allerheiligenstriezel",
+      "Apple strudel",
+      "Azerbaijani pakhlava",
+      "Bakewell pudding",
+      "Banket",
+      "Baklava",
+      "Bánh pía",
+      "Banitsa",
+      "Bear claw",
+      "Belokranjska povitica",
+      "Bethmännchen",
+      "Bierock",
+      "Bizcocho",
+      "Boyoz",
+      "Briouat",
+      "Bruttiboni",
+      "Bulemas",
+      "Bundevara",
+      "Chorley cake",
+      "Coca",
+      "Coulibiac",
+      "Coussin de Lyon",
+      "Cream horn",
+      "Cremeschnitte",
+      "Cronut",
+      "Cruller",
+      "Cuban pastry",
+      "Curry beef turnover",
+      "Curry puff",
+      "Dabby-Doughs",
+      "Dutch letter",
+      "Eccles cake",
+      "Empanada",
+      "Ensaïmada",
+      "Fa gao",
+      "Fazuelos",
+      "Fig roll",
+      "Flaons",
+      "Folar de chaves",
+      "Fougasse",
+      "Funing big cake",
+      "Galaktoboureko",
+      "Garibaldi biscuit",
+      "Gata",
+      "Gibanica",
+      "Gougère",
+      "Grape pie",
+      "Gujiya",
+      "Gyeongju bread",
+      "Hertzoggie",
+      "Hillomunkki",
+      "Honey cake",
+      "Hotteok",
+      "Hrantov kadaif",
+      "Imqaret",
+      "Jachnun",
+      "Jalebi",
+      "Joulutorttu",
+      "Kalach",
+      "Kalburabastı",
+      "Kanafeh",
+      "Kazandibi",
+      "Khanom farang kudi chin",
+      "Kitchener bun",
+      "Klondike bar",
+      "Knieküchle",
+      "Kolompeh",
+      "Kouign-amann",
+      "Kozunak",
+      "Kremna rezina",
+      "Kroštule",
+      "Kruffins",
+      "Kuluri",
+      "Kürtőskalács",
+      "Lamington",
+      "Lattice",
+      "Latticed cherry pie",
+      "Lekach",
+      "Linzer torte",
+      "Lontong kueh",
+      "Ma'amoul",
+      "Ma'arouk",
+      "Maizena",
+      "Malsouka",
+      "Mandazi",
+      "Mantecadas",
+      "Maple twist",
+      "Marillenknödel",
+      "Marzipan",
+      "Marzipan cake",
+      "Mazurek",
+      "Mekitsa",
+      "Merveilleux",
+      "Mille-feuille",
+      "Mince pie",
+      "Minsk gingerbread",
+      "Monay",
+      "Mooncake",
+      "Mou de Llevant",
+      "Mouna",
+      "Nabulsi",
+      "Neenish tart",
+      "Nevralt",
+      "Nunt",
+      "Otap",
+      "Othmaliye",
+      "Pai de mel",
+      "Pan de muerto",
+      "Panbrioche",
+      "Pandowdy",
+      "Pandoro",
+      "Panettone",
+      "Papanași",
+      "Pastafrola",
+      "Pastel",
+      "Pastel de choclo",
+      "Pastel de nata",
+      "Pastel de Santa Clara",
+      "Pastelito",
+      "Pasticciotto",
+      "Pasty",
+      "Petulla",
+      "Pionono",
+      "Pirog",
+      "Pirozhki",
+      "Pita",
+      "Plăcintă",
+      "Pogača",
+      "Poppy seed roll",
+      "Poppy seed strudel",
+      "Pretzel",
+      "Profiterole",
+      "Punschkrapfen",
+      "Qottab",
+      "Qurabiya",
+      "Rainbow cookie",
+      "Reese's Peanut Butter Cup",
+      "Refrigerator biscuit",
+      "Refrigerator cookie",
+      "Rendang bread",
+      "Rice bread",
+      "Ricciarelli",
+      "Rollmops",
+      "Rolo",
+      "Rugelach",
+      "Runeberg torte",
+      "Sablé",
+      "Salara",
+      "Samosa",
+      "Sanjak tart",
+      "Schiaccia",
+      "Schichttorte",
+      "Schiacciata",
+      "Sekacz",
+      "Semla",
+      "Shakarbura",
+      "Shawarma bread",
+      "Sheermal",
+      "Shirmal",
+      "Simnel cake",
+      "Sklandrausis",
+      "Sobao",
+      "Sou",
+      "Spekkoek",
+      "Spelt bread",
+      "Spettekaka",
+      "Stollen",
+      "Streuselkuchen",
+      "Strudel",
+      "Studenac",
+      "Suksan",
+      "Sweetheart cake",
+      "Tahinopita",
+      "Tamale",
+      "Tamalito",
+      "Tart",
+      "Tarta de Santiago",
+      "Tarte à la Bouillie",
+      "Tarte aux pommes",
+      "Tarte Tatin",
+      "Thalipeeth",
+      "Timbit",
+      "Toaster Strudel",
+      "Torte",
+      "Torun gingerbread",
+      "Tsoureki",
+      "Tuile",
+      "Tunnbröd",
+      "Turkish delight",
+      "Tutmanik",
+      "Ufo",
+      "Vánočka",
+      "Vetkoek",
+      "Vínarterta",
+      "Wafer",
+      "Welsh cake",
+      "Windmill cookie",
+      "Yatsuhashi",
+      "Yukgaejang bread",
+      "Zeeuwse bolus"
+    ];
+      
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function displayRandomBreads() {
+            var shuffledBreadList = shuffleArray(breadlist);
+            var randomBreads = shuffledBreadList.slice(0, 5);
+            var breadNamesContainer = document.getElementById('breadNamesContainer');
+            breadNamesContainer.innerHTML = '';
+            randomBreads.forEach(function(bread) {
+                var breadNameElement = document.createElement('span');
+                breadNameElement.textContent = bread;
+                breadNameElement.classList.add('bread-name');
+                breadNamesContainer.appendChild(breadNameElement);
+            });
+        }
+
+        displayRandomBreads();
+
+        function handleLeftClick(event) {
+            displayRandomBreads();
+        }
+
+        document.body.addEventListener('click', handleLeftClick);
+    </script>
+</body>
+</html>
