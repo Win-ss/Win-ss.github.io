@@ -115,9 +115,9 @@
 <body>
   <div class="container">
     <h1>🐍</h1>
-<div class="button-container">
-  <a href="https://win-ss.github.io"><button class="green-button">&#9664;</button></a>
-</div>
+    <div class="button-container">
+      <a href="https://win-ss.github.io"><button class="green-button">&#9664;</button></a>
+    </div>
 
     <canvas width="400" height="400" id="game"></canvas>
     <div id="score">Score: 0</div>
@@ -230,6 +230,18 @@
       else if (e.which === 40 && snake.dy === 0) {
         snake.dy = grid;
         snake.dx = 0;
+      }
+    });
+
+    // Disable right-click
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    // Disable F12 key and CTRL + SHIFT + I
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault();
       }
     });
 
