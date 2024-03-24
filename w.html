@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winss</title>
+  <style>
+    body {
+      background-color: black;
+      height: 100vh;  
+      display: grid;
+      place-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #logo {
+      position: relative;
+      width: 300px;
+      aspect-ratio: 1000 / 1000;
+      user-select: none;
+    }
+
+    #logo > img {
+      width: 100%;
+      position: absolute;
+    }
+
+    .meta-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .meta-link > :is(span, a) {
+      font-family: "Rubik", sans-serif;
+      font-size: 1.25rem;
+      color: white;
+      text-decoration: none; 
+    }
+
+    .meta-link > .label {
+      text-align: right;
+    }
+
+    .meta-link > a {
+      text-decoration: none;
+      outline: none;
+    }
+
+    .meta-link > a.source {
+      color: rgb(94, 106, 210);
+    }
+
+    .meta-link > a:is(:hover, :focus) > i {
+      color: white;  
+    }
+
+
+    .green-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: green;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      user-select: none; 
+    }
+  </style>
+</head>
+<body>
+  <div id="logo">
+    <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/4.svg" draggable="false" />
+    <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/3.svg" draggable="false" />
+    <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/2.svg" draggable="false" />
+    <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/1.svg" draggable="false" />
+    <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/white.svg" draggable="false" />
+  </div>
+
+<a href="https://win-ss.github.io/" class="green-button" style="text-decoration: none;">
+  <span style="text-decoration: none;">⮜</span> 
+</a>
+
+  <script>
+    const logo = document.getElementById("logo"),
+          images = logo.querySelectorAll("img");
+
+    const getActive = () => document.body.dataset.active === "true",
+          setActiveTo = active => document.body.dataset.active = active;
+
+    const shift = (image, index, rangeX, rangeY) => {
+      const active = getActive();
+            
+      const translationIntensity = active ? 24 : 4,
+            maxTranslation = translationIntensity * (index + 1),
+            currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
+      
+      const scale = active ? 1 + (index * 0.4) : 1;
+      
+      image.animate({ 
+        translate: currentTranslation, 
+        scale 
+      }, { duration: 750, fill: "forwards", easing: "ease" });
+    }
+
+    const shiftAll = (images, rangeX, rangeY) => 
+      images.forEach((image, index) => shift(image, index, rangeX, rangeY));
+
+    const shiftLogo = (e, images) => {  
+      const rect = logo.getBoundingClientRect(),
+            radius = 1000;
+      
+      const centerX = rect.left + (rect.width / 2),
+            centerY = rect.top + (rect.height / 2);
+      
+      const rangeX = (e.clientX - centerX) / radius,
+            rangeY = (e.clientY - centerY) / radius;
+      
+      shiftAll(images, rangeX, rangeY);
+    }
+
+    const resetLogo = () => {
+      setActiveTo(false);
+      shiftAll(images, 0.4, -0.7);
+    }
+
+    window.onmousemove = e => shiftLogo(e, images);
+
+    document.body.onmouseleave = () => {
+      if(!getActive()) resetLogo();
+    }
+
+    window.onmousedown = e => {
+      setActiveTo(true);
+      shiftLogo(e, images);
+    }
+
+    window.onmouseup = e => resetLogo();
+
+    resetLogo();
+
+    window.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+
+    window.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
+          (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+          (e.ctrlKey && e.shiftKey && e.key === 'C')) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
