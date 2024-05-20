@@ -16,8 +16,9 @@
 
     #logo {
       position: relative;
-      width: 300px;
-      aspect-ratio: 1000 / 1000;
+      width: 30vw;
+      max-width: 300px;
+      aspect-ratio: 1 / 1;
       user-select: none;
     }
 
@@ -56,7 +57,6 @@
       color: white;  
     }
 
-
     .green-button {
       position: fixed;
       top: 10px;
@@ -72,6 +72,13 @@
       gap: 5px;
       user-select: none; 
     }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+      .meta-link > :is(span, a) {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+      }
+    }
   </style>
 </head>
 <body>
@@ -83,7 +90,7 @@
     <img src="https://raw.githubusercontent.com/Win-ss/Win-ss.github.io/main/white.svg" draggable="false" />
   </div>
 
-<a href="https://win-ss.github.io/" class="green-button" style="text-decoration: none;">
+<a href="https://winss.cloud/" class="green-button" style="text-decoration: none;">
   <span style="text-decoration: none;">⮜</span> 
 </a>
 
@@ -130,6 +137,11 @@
       shiftAll(images, 0.4, -0.7);
     }
 
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      shiftLogo(touch, images);
+    };
+
     window.onmousemove = e => shiftLogo(e, images);
 
     document.body.onmouseleave = () => {
@@ -142,6 +154,15 @@
     }
 
     window.onmouseup = e => resetLogo();
+
+    document.body.addEventListener('touchmove', handleTouchMove);
+
+    document.body.addEventListener('touchstart', (e) => {
+      setActiveTo(true);
+      handleTouchMove(e);
+    });
+
+    document.body.addEventListener('touchend', resetLogo);
 
     resetLogo();
 
