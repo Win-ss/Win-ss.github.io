@@ -37,7 +37,6 @@
             position: relative;
         }
 
-        /* Green button styles */
         .green-button {
             background-color: #4CAF50;
             color: white;
@@ -112,7 +111,6 @@
             }
         }
 
-        /* Dot styles */
         .dot {
             width: 5px;
             height: 5px;
@@ -134,31 +132,130 @@
         .dot:nth-child(1) { left: 10%; bottom: -10vh; animation-delay: 0s; }
         .dot:nth-child(2) { left: 20%; bottom: -10vh; animation-delay: 1s; }
         .dot:nth-child(3) { left: 30%; bottom: -10vh; animation-delay: 2s; }
+
+        #logo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 10%;
+            min-width: 100px;
+            aspect-ratio: 1000 / 1000;
+            user-select: none;
+            z-index: 1000;
+        }
+
+        #logo img {
+            width: 100%;
+            position: absolute;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
-<div class="container">
-    <h2>Welcome to My site!</h2>
-    <p>This is a Work in progress</p>
-    <p>Things will change</p>
-	<div class="button-container">
-		<a href="/cheese"><button class="green-button cheese-button">🧀</button></a>
-		<a href="/pastry"><span class="green-button">🥧</span></a>
-		<a href="/snake"><button class="black-button">🐍</button></a>
-		<a href="/w"><button class="black-button">W</button></a>
-	</div>
+    <div id="logo">
+        <img src="/assets/4.svg" draggable="false" />
+        <img src="/assets/3.svg" draggable="false" />
+        <img src="/assets/2.svg" draggable="false" />
+        <img src="/assets/1.svg" draggable="false" />
+        <img src="/assets/white.svg" draggable="false" />
+    </div>
 
-</div>
-<script>
-    for (let i = 0; i < 50; i++) {
-        let dot = document.createElement('div');
-        dot.classList.add('dot');
-        let position = Math.floor(Math.random() * 100);
-        dot.style.left = position + '%';
-        dot.style.bottom = -(Math.random() * 100) + 'vh';
-        dot.style.animationDelay = Math.random() * 10 + 's';
-        document.body.appendChild(dot);
-    }
-</script>
+    <div class="container">
+        <h2>Welcome to My site!</h2>
+        <p>This is a Work in progress</p>
+        <p>Things will change</p>
+        <div class="button-container">
+            <a href="/cheese"><button class="green-button cheese-button">🧀</button></a>
+            <a href="/pastry"><span class="green-button">🥧</span></a>
+            <a href="/snake"><button class="black-button">🐍</button></a>
+            <a href="/w"><button class="black-button">W</button></a>
+        </div>
+    </div>
+
+    <script>
+        const logo = document.getElementById("logo"),
+              images = logo.querySelectorAll("img");
+
+        const getActive = () => document.body.dataset.active === "true",
+              setActiveTo = active => document.body.dataset.active = active;
+
+        const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+        const shift = (image, index, rangeX, rangeY) => {
+            const active = getActive();
+
+            const translationIntensity = active ? 24 : 4,
+                  maxTranslation = translationIntensity * (index + 1);
+
+            const clampedRangeX = clamp(rangeX, -1, 1),
+                  clampedRangeY = clamp(rangeY, -1, 1);
+
+            const currentTranslation = `${maxTranslation * clampedRangeX}% ${maxTranslation * clampedRangeY}%`;
+
+            const scale = active ? 1 + (index * 0.4) : 1;
+
+            image.animate({
+                translate: currentTranslation,
+                scale
+            }, { duration: 750, fill: "forwards", easing: "ease" });
+        }
+
+        const shiftAll = (images, rangeX, rangeY) =>
+            images.forEach((image, index) => shift(image, index, rangeX, rangeY));
+
+        const shiftLogo = (e, images) => {
+            const rect = logo.getBoundingClientRect(),
+                  radius = 1000;
+
+            const centerX = rect.left + (rect.width / 2),
+                  centerY = rect.top + (rect.height / 2);
+
+            const rangeX = (e.clientX - centerX) / radius,
+                  rangeY = (e.clientY - centerY) / radius;
+
+            shiftAll(images, rangeX, rangeY);
+        }
+
+        const resetLogo = () => {
+            setActiveTo(false);
+            shiftAll(images, 0.4, -0.7);
+        }
+
+        window.onmousemove = e => shiftLogo(e, images);
+
+        document.body.onmouseleave = () => {
+            if (!getActive()) resetLogo();
+        }
+
+        window.onmousedown = e => {
+            setActiveTo(true);
+            shiftLogo(e, images);
+        }
+
+        window.onmouseup = e => resetLogo();
+
+        resetLogo();
+
+        window.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C')) {
+                e.preventDefault();
+            }
+        });
+
+        for (let i = 0; i < 50; i++) {
+            let dot = document.createElement('div');
+            dot.classList.add('dot');
+            let position = Math.floor(Math.random() * 100);
+            dot.style.left = position + '%';
+            dot.style.bottom = -(Math.random() * 100) + 'vh';
+            dot.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(dot);
+        }
+    </script>
 </body>
 </html>
