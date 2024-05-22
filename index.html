@@ -20,6 +20,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             position: relative;
+            flex-direction: column;
         }
 
         .container {
@@ -35,6 +36,7 @@
                 0 0 160px rgba(0, 0, 0, 0.3);
             animation: breathe 8s infinite;
             position: relative;
+            margin-top: 20px; /* Add some margin to separate the logo and container */
         }
 
         .green-button {
@@ -134,9 +136,6 @@
         .dot:nth-child(3) { left: 30%; bottom: -10vh; animation-delay: 2s; }
 
         #logo {
-            position: fixed;
-            top: 10px;
-            left: 10px;
             width: 10%;
             min-width: 100px;
             aspect-ratio: 1000 / 1000;
@@ -226,13 +225,6 @@
             if (!getActive()) resetLogo();
         }
 
-        window.onmousedown = e => {
-            setActiveTo(true);
-            shiftLogo(e, images);
-        }
-
-        window.onmouseup = e => resetLogo();
-
         resetLogo();
 
         window.addEventListener('contextmenu', function (e) {
@@ -242,7 +234,9 @@
         window.addEventListener('keydown', function (e) {
             if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
                 (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'C')) {
+                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                (e.ctrlKey && e.key === 'U') ||
+                (e.key === 'F12')) {
                 e.preventDefault();
             }
         });
