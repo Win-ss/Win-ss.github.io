@@ -34,7 +34,7 @@
         }
 
         #logo > img:last-child {
-            transform: translateY(-2.5%);
+            transform: translateY(0%);
         }
 
         .center-box {
@@ -44,21 +44,22 @@
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 600px;
+            width: 50%;
             z-index: 10;
             user-select: none;
         }
 
         .center-box h1, .center-box h2 {
-            margin: 10px 0;
+            margin: 1rem 0; /* Updated margin using rem units */
             color: #000;
+            font-size: 2rem; /* Updated font size using rem units */
         }
 
         .buttons {
-            margin-top: 20px;
+            margin-top: 1rem; /* Updated margin using rem units */
+            margin-bottom: 2rem; /* Added margin to create space below buttons */
             display: flex;
-            justify-content: center;
+            justify-content: center; 
             flex-wrap: wrap;
         }
 
@@ -66,17 +67,18 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            margin: 10px;
+            padding: 1rem; /* Updated padding using rem units */
+            margin: 1rem;
             border-radius: 5px;
             background-color: #fff;
             border: 2px solid #fff;
             text-decoration: none;
             transition: border-color 0.3s;
-            width: 60px;
-            height: 60px;
-            font-size: 2rem;
+            width: 10vmin; /* Updated width using vmin units */
+            height: 10vmin; /* Updated height using vmin units */
+            font-size: 1.5rem; /* Updated font size using rem units */
             user-select: none;
+            position: relative;
         }
 
         .button:hover {
@@ -86,6 +88,26 @@
         .button img {
             width: 100%;
             height: 100%;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px); /* Updated position */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 15px 25px;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #8A57FC;
+            white-space: nowrap;
+            z-index: 20;
+            border: 1px solid #8A57FC;
+        }
+
+        .button:hover .tooltip {
+            display: block;
         }
 
         .glow-line {
@@ -124,8 +146,22 @@
             }
         }
 
+        @keyframes gradientAnimation {
+            0% {
+                background: linear-gradient(to right, #8A57FC, #9567FC);
+            }
+            33% {
+                background: linear-gradient(to right, #9567FC, #A178FC);
+            }
+            66% {
+                background: linear-gradient(to right, #A178FC, #AD89FC);
+            }
+            100% {
+                background: linear-gradient(to right, #AD89FC, #8A57FC);
+            }
+        }
+
         #blob {
-            background-color: white;
             height: 34vmax;
             aspect-ratio: 1;
             position: absolute;
@@ -133,8 +169,7 @@
             top: 30%;
             translate: -50% -50%;
             border-radius: 50%;
-            background: linear-gradient(to right, #8A57FC, mediumpurple);
-            animation: rotate 2.5s infinite;
+            animation: rotate 4.5s infinite, gradientAnimation 5s infinite;
             opacity: 0.45;
             z-index: 1;
         }
@@ -146,6 +181,13 @@
             z-index: 2;
             backdrop-filter: blur(12vmax);
         }
+
+        /* Hide blob and blur on small screens */
+        @media (max-width: 768px) {
+            #blob, #blur {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,7 +198,7 @@
         <img src="/assets/purple3.svg" draggable="false" />
         <img src="/assets/purple2.svg" draggable="false" />
         <img src="/assets/purple.svg" draggable="false" />
-        <img src="/assets/white.svg" draggable="false" />
+        <img src="/assets/wwhite.svg" draggable="false" />
     </div>
     <div class="center-box">
         <h1>Welcome to my site!</h1>
@@ -164,19 +206,27 @@
         <div class="buttons">
             <a href="https://discord.com" class="button">
                 <img src="/assets/discord.svg" alt="Discord">
+                <div class="tooltip">Winss.</div>
             </a>
-            <a href="cheese.html" class="button">🧀</a>
-            <a href="snake.html" class="button">🐍</a>
+            <a href="cheese.html" class="button">
+            <img src="/assets/cheese.svg" alt="cheese">
+            </a>
+            <a href="snake.html" class="button">
+            <img src="/assets/snake.svg" alt="snake">
+            </a>
             <a href="https://youtube.com" class="button">
-                <img src="/assets/youtube.svg" alt="YouTube">
-            </a>
-        </div>
-        <div class="glow-line"></div>
+            <img src="/assets/youtube.svg" alt="            YouTube">
+        </a>
     </div>
-    <script>
-        const blob = document.getElementById("blob");
-        const centerBox = document.querySelector('.center-box');
+    <div class="glow-line"></div>
+</div>
+<script>
+    const blob = document.getElementById("blob");
+    const centerBox = document.querySelector('.center-box');
 
+    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
+    if (!isMobile) {
         window.onpointermove = event => {
             const { clientX, clientY } = event;
             const rect = centerBox.getBoundingClientRect();
@@ -191,76 +241,80 @@
                 }, { duration: 100, fill: "forwards" });
             }
         }
+    } else {
+        // Remove the blob and blur elements for mobile devices
+        blob.remove();
+        document.getElementById('blur').remove();
+    }
 
-        const logo = document.getElementById("logo"),
-              images = logo.querySelectorAll("img");
+    const logo = document.getElementById("logo"),
+          images = logo.querySelectorAll("img");
 
-        const shift = (image, index, rangeX, rangeY) => {
-            const translationIntensity = 4,
-                  maxTranslation = translationIntensity * (index + 1),
-                  currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
+    const shift = (image, index, rangeX, rangeY) => {
+        const translationIntensity = 4,
+              maxTranslation = translationIntensity * (index + 1),
+              currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
 
-            const scale = 1;
+        const scale = 1;
 
-            image.animate({
-                translate: currentTranslation,
-                scale
-            }, { duration: 750, fill: "forwards", easing: "ease" });
-        }
+        image.animate({
+            translate: currentTranslation,
+            scale
+        }, { duration: 750, fill: "forwards", easing: "ease" });
+    }
 
-        const shiftAll = (images, rangeX, rangeY) =>
-            images.forEach((image, index) => shift(image, index, rangeX, rangeY));
+    const shiftAll = (images, rangeX, rangeY) =>
+        images.forEach((image, index) => shift(image, index, rangeX, rangeY));
 
-        const shiftLogo = (e, images) => {
-            const rect = logo.getBoundingClientRect(),
-                  radius = 1000;
+    const shiftLogo = (e, images) => {
+        const rect = logo.getBoundingClientRect(),
+              radius = 1000;
 
-            const centerX = rect.left + (rect.width / 2),
-                  centerY = rect.top + (rect.height / 2);
+        const centerX = rect.left + (rect.width / 2),
+              centerY = rect.top + (rect.height / 2);
 
-            const rangeX = (e.clientX - centerX) / radius,
-                  rangeY = (e.clientY - centerY) / radius;
+        const rangeX = (e.clientX - centerX) / radius,
+              rangeY = (e.clientY - centerY) / radius;
 
-            shiftAll(images, rangeX, rangeY);
-        }
+        shiftAll(images, rangeX, rangeY);
+    }
 
-        const resetLogo = () => {
-            shiftAll(images, 0.4, -0.7);
-        }
+    const resetLogo = () => {
+        shiftAll(images, 0.1, -1);
+    }
 
+    if (!isMobile) {
         window.onmousemove = e => shiftLogo(e, images);
+    }
 
-        document.body.onmouseleave = () => {
-            resetLogo();
-        }
-
-        window.onmousedown = e => {
-            shiftLogo(e, images);
-        }
-
-        window.onmouseup = e => resetLogo();
-
+    document.body.onmouseleave = () => {
         resetLogo();
+    }
 
-        window.addEventListener('contextmenu', function (e) {
+    window.onmousedown = e => {
+        shiftLogo(e, images);
+    }
+
+    window.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    window.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+            (e.ctrlKey && e.key === 'U') ||
+            (e.key === 'F12')) {
             e.preventDefault();
-        });
+        }
+    });
 
-        window.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-                (e.ctrlKey && e.key === 'U') ||
-                (e.key === 'F12')) {
-                e.preventDefault();
-            }
+    window.addEventListener('beforeunload', function () {
+        document.querySelectorAll('body *').forEach((el) => {
+            el.style.userSelect = 'none';
         });
-
-        window.addEventListener('beforeunload', function () {
-            document.querySelectorAll('body *').forEach((el) => {
-                el.style.userSelect = 'none';
-            });
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
+
