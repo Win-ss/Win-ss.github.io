@@ -3,231 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Winss's Site</title>
+    <title>Winss</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
-            overflow: hidden;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            position: relative;
+            display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            font-family: Arial, sans-serif;
         }
-
-        .container {
-            width: 50%;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow:
-                0 0 40px rgba(0, 0, 0, 0.3),
-                0 0 80px rgba(0, 0, 0, 0.3),
-                0 0 120px rgba(0, 0, 0, 0.3),
-                0 0 160px rgba(0, 0, 0, 0.3);
-            animation: breathe 8s infinite;
-            position: relative;
-            margin-top: 20px; /* Add some margin to separate the logo and container */
-        }
-
-        .green-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .black-button {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .button-container {
-            margin-top: 20px;
-        }
-
-        .cheese-button {
-            background-color: #f9b02e;
-        }
-
-        @keyframes breathe {
-            0%, 100% {
-                box-shadow:
-                    0 0 40px rgba(72, 240, 76, 0.3),
-                    0 0 80px rgba(72, 240, 76, 0.3),
-                    0 0 120px rgba(7, 247, 37, 0.3),
-                    0 0 160px rgba(7, 247, 37, 0.3);
-            }
-            20% {
-                box-shadow:
-                    0 0 40px rgba(63, 255, 199, 0.3),
-                    0 0 80px rgba(63, 255, 199, 0.3),
-                    0 0 120px rgba(72, 240, 76, 0.3),
-                    0 0 160px rgba(72, 240, 76, 0.3);
-            }
-            40% {
-                box-shadow:
-                    0 0 40px rgba(76, 201, 240, 0.3),
-                    0 0 80px rgba(76, 201, 240, 0.3),
-                    0 0 120px rgba(63, 255, 199, 0.3),
-                    0 0 160px rgba(63, 255, 199, 0.3);
-            }
-            60% {
-                box-shadow:
-                    0 0 40px rgba(67, 97, 206, 0.3),
-                    0 0 80px rgba(67, 97, 206, 0.3),
-                    0 0 120px rgba(76, 201, 240, 0.3),
-                    0 0 160px rgba(76, 201, 240, 0.3);
-            }
-            80% {
-                box-shadow:
-                    0 0 40px rgba(86, 11, 173, 0.3),
-                    0 0 80px rgba(86, 11, 173, 0.3),
-                    0 0 120px rgba(63, 55, 201, 0.3),
-                    0 0 160px rgba(67, 97, 206, 0.3);
-            }
-        }
-
-        .dot {
-            width: 5px;
-            height: 5px;
-            background-color: #fff;
-            border-radius: 50%;
-            position: absolute;
-            animation: moveDots 10s linear infinite;
-        }
-
-        @keyframes moveDots {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-100vh);
-            }
-        }
-
-        .dot:nth-child(1) { left: 10%; bottom: -10vh; animation-delay: 0s; }
-        .dot:nth-child(2) { left: 20%; bottom: -10vh; animation-delay: 1s; }
-        .dot:nth-child(3) { left: 30%; bottom: -10vh; animation-delay: 2s; }
 
         #logo {
-            width: 10%;
-            min-width: 50px;
-            max-width: 150px;
-            aspect-ratio: 1000 / 1000;
+            position: relative;
+            width: 20vmin;
+            aspect-ratio: 1;
+            margin-bottom: 2rem;
             user-select: none;
-            z-index: 1000;
         }
 
-        #logo img {
+        #logo > img {
             width: 100%;
             position: absolute;
         }
 
-        @media (max-width: 600px) {
-            #logo {
-                width: 20%;
-                min-width: 50px;
-                max-width: 100px;
-            }
-
-            .container {
-                width: 80%;
-                padding: 10px;
-            }
+        .center-box {
+            position: relative;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
         }
 
-        @media (min-width: 1200px) {
-            #logo {
-                width: 8%;
-                min-width: 100px;
-                max-width: 200px;
-            }
+        .center-box h1, .center-box h2 {
+            margin: 10px 0;
+            color: #000;
+        }
 
-            .container {
-                width: 40%;
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            border: 2px solid #fff;
+            text-decoration: none;
+            transition: border-color 0.3s;
+            width: 60px;
+            height: 60px;
+            font-size: 2rem; 
+        }
+
+        .button:hover {
+            border-color: #8A57FC;
+        }
+
+        .button img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .glow-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 5px #8A57FC;
+            animation: glow 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px 5px #8A57FC;
+            }
+            50% {
+                box-shadow: 0 0 40px 10px #8A57FC;
             }
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
     <div id="logo">
-        <img src="/assets/4.svg" draggable="false" />
-        <img src="/assets/3.svg" draggable="false" />
-        <img src="/assets/2.svg" draggable="false" />
-        <img src="/assets/1.svg" draggable="false" />
+        <img src="/assets/purple.svg" draggable="false" />
         <img src="/assets/white.svg" draggable="false" />
     </div>
-
-    <div class="container">
-        <h2>Welcome to My site!</h2>
-        <p>This is a Work in progress</p>
-        <p>Things will change</p>
-        <div class="button-container">
-            <a href="/cheese"><button class="green-button cheese-button">🧀</button></a>
-            <a href="/pastry"><span class="green-button">🥧</span></a>
-            <a href="/snake"><button class="black-button">🐍</button></a>
-            <a href="/w"><button class="black-button">W</button></a>
+    <div class="center-box">
+        <h1>Welcome to my site!</h1>
+        <h2>This is a placeholder for now</h2>
+        <div class="buttons">
+            <a href="https://discord.com" class="button">
+                <img src="/assets/discord.svg" alt="Discord">
+            </a>
+            <a href="cheese.html" class="button">🧀</a>
+            <a href="snake.html" class="button">🐍</a>
+            <a href="https://youtube.com" class="button">
+                <img src="/assets/youtube.svg" alt="YouTube">
+            </a>
         </div>
+        <div class="glow-line"></div>
     </div>
-
     <script>
         const logo = document.getElementById("logo"),
               images = logo.querySelectorAll("img");
 
-        const getActive = () => document.body.dataset.active === "true",
-              setActiveTo = active => document.body.dataset.active = active;
-
-        const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
-
         const shift = (image, index, rangeX, rangeY) => {
-            const active = getActive();
+            const translationIntensity = 4,
+                  maxTranslation = translationIntensity * (index + 1),
+                  currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
 
-            const translationIntensity = active ? 24 : 4,
-                  maxTranslation = translationIntensity * (index + 1);
+            const scale = 1;
 
-            const clampedRangeX = clamp(rangeX, -1, 1),
-                  clampedRangeY = clamp(rangeY, -1, 1);
-
-            const currentTranslation = `${maxTranslation * clampedRangeX}% ${maxTranslation * clampedRangeY}%`;
-
-            const scale = active ? 1 + (index * 0.4) : 1;
-
-            image.animate({
-                translate: currentTranslation,
-                scale
+            image.animate({ 
+                translate: currentTranslation, 
+                scale 
             }, { duration: 750, fill: "forwards", easing: "ease" });
         }
 
-        const shiftAll = (images, rangeX, rangeY) =>
+        const shiftAll = (images, rangeX, rangeY) => 
             images.forEach((image, index) => shift(image, index, rangeX, rangeY));
 
-        const shiftLogo = (e, images) => {
+        const shiftLogo = (e, images) => {  
             const rect = logo.getBoundingClientRect(),
                   radius = 1000;
 
@@ -241,15 +153,20 @@
         }
 
         const resetLogo = () => {
-            setActiveTo(false);
             shiftAll(images, 0.4, -0.7);
         }
 
         window.onmousemove = e => shiftLogo(e, images);
 
         document.body.onmouseleave = () => {
-            if (!getActive()) resetLogo();
+            resetLogo();
         }
+
+        window.onmousedown = e => {
+            shiftLogo(e, images);
+        }
+
+        window.onmouseup = e => resetLogo();
 
         resetLogo();
 
@@ -258,24 +175,12 @@
         });
 
         window.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
-                (e.ctrlKey && e.key === 'U') ||
-                (e.key === 'F12')) {
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+                (e.ctrlKey && e.shiftKey && e.key === 'C')) {
                 e.preventDefault();
             }
         });
-
-        for (let i = 0; i < 50; i++) {
-            let dot = document.createElement('div');
-            dot.classList.add('dot');
-            let position = Math.floor(Math.random() * 100);
-            dot.style.left = position + '%';
-            dot.style.bottom = -(Math.random() * 100) + 'vh';
-            dot.style.animationDelay = Math.random() * 10 + 's';
-            document.body.appendChild(dot);
-        }
     </script>
 </body>
 </html>
