@@ -15,8 +15,8 @@
             background-color: #000;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            position: relative; 
-            user-select: none; 
+            position: relative;
+            user-select: none;
         }
 
         #logo {
@@ -25,7 +25,7 @@
             aspect-ratio: 1;
             margin-bottom: 2rem;
             user-select: none;
-            z-index: 10; 
+            z-index: 10;
         }
 
         #logo > img {
@@ -42,8 +42,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 90%;
             max-width: 600px;
-            z-index: 10; 
-            user-select: none; 
+            z-index: 10;
+            user-select: none;
         }
 
         .center-box h1, .center-box h2 {
@@ -71,8 +71,8 @@
             transition: border-color 0.3s;
             width: 60px;
             height: 60px;
-            font-size: 2rem; 
-            user-select: none; 
+            font-size: 2rem;
+            user-select: none;
         }
 
         .button:hover {
@@ -108,15 +108,15 @@
         @keyframes rotate {
             from {
                 rotate: 0deg;
-                opacity: 0.25; 
+                opacity: 0.25;
             }
             50% {
                 scale: 1 1.5;
-                opacity: 0.25; 
+                opacity: 0.25;
             }
             to {
                 rotate: 360deg;
-                opacity: 0.25; 
+                opacity: 0.25;
             }
         }
 
@@ -132,7 +132,7 @@
             background: linear-gradient(to right, #8A57FC, mediumpurple);
             animation: rotate 3.5s infinite;
             opacity: 0.25;
-            z-index: 1; 
+            z-index: 1;
         }
 
         #blur {
@@ -148,7 +148,6 @@
     <div id="blob"></div>
     <div id="blur"></div>
     <div id="logo">
-        <img src="/assets/purple.svg" draggable="false" />
         <img src="/assets/purple.svg" draggable="false" />
         <img src="/assets/white.svg" draggable="false" />
     </div>
@@ -169,14 +168,21 @@
     </div>
     <script>
         const blob = document.getElementById("blob");
+        const centerBox = document.querySelector('.center-box');
 
         window.onpointermove = event => {
             const { clientX, clientY } = event;
+            const rect = centerBox.getBoundingClientRect();
 
-            blob.animate({
-                left: `${clientX}px`,
-                top: `${clientY}px`
-            }, { duration: 100, fill: "forwards" });
+            if (clientX > rect.left && clientX < rect.right && clientY > rect.top && clientY < rect.bottom) {
+                blob.style.opacity = '0';
+            } else {
+                blob.style.opacity = '0.25';
+                blob.animate({
+                    left: `${clientX}px`,
+                    top: `${clientY}px`
+                }, { duration: 100, fill: "forwards" });
+            }
         }
 
         const logo = document.getElementById("logo"),
@@ -189,16 +195,16 @@
 
             const scale = 1;
 
-            image.animate({ 
-                translate: currentTranslation, 
-                scale 
+            image.animate({
+                translate: currentTranslation,
+                scale
             }, { duration: 750, fill: "forwards", easing: "ease" });
         }
 
-        const shiftAll = (images, rangeX, rangeY) => 
+        const shiftAll = (images, rangeX, rangeY) =>
             images.forEach((image, index) => shift(image, index, rangeX, rangeY));
 
-        const shiftLogo = (e, images) => {  
+        const shiftLogo = (e, images) => {
             const rect = logo.getBoundingClientRect(),
                   radius = 1000;
 
@@ -234,15 +240,15 @@
         });
 
         window.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
-                (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-                (e.ctrlKey && e.shiftKey && e.key === 'C') || 
-                (e.ctrlKey && e.key === 'U') || 
+            if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                (e.ctrlKey && e.key === 'U') ||
                 (e.key === 'F12')) {
                 e.preventDefault();
             }
         });
-        
+
         window.addEventListener('beforeunload', function () {
             document.querySelectorAll('body *').forEach((el) => {
                 el.style.userSelect = 'none';
