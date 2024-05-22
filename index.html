@@ -14,6 +14,9 @@
             justify-content: center;
             background-color: #000;
             font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative; 
+            user-select: none; 
         }
 
         #logo {
@@ -22,6 +25,7 @@
             aspect-ratio: 1;
             margin-bottom: 2rem;
             user-select: none;
+            z-index: 10; 
         }
 
         #logo > img {
@@ -38,6 +42,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 90%;
             max-width: 600px;
+            z-index: 10; 
+            user-select: none; 
         }
 
         .center-box h1, .center-box h2 {
@@ -66,6 +72,7 @@
             width: 60px;
             height: 60px;
             font-size: 2rem; 
+            user-select: none; 
         }
 
         .button:hover {
@@ -97,9 +104,49 @@
                 box-shadow: 0 0 40px 10px #8A57FC;
             }
         }
+
+        @keyframes rotate {
+            from {
+                rotate: 0deg;
+                opacity: 0.25; 
+            }
+            50% {
+                scale: 1 1.5;
+                opacity: 0.25; 
+            }
+            to {
+                rotate: 360deg;
+                opacity: 0.25; 
+            }
+        }
+
+        #blob {
+            background-color: white;
+            height: 34vmax;
+            aspect-ratio: 1;
+            position: absolute;
+            left: 30%;
+            top: 30%;
+            translate: -50% -50%;
+            border-radius: 50%;
+            background: linear-gradient(to right, #8A57FC, mediumpurple);
+            animation: rotate 3.5s infinite;
+            opacity: 0.25;
+            z-index: 1; 
+        }
+
+        #blur {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            z-index: 2;
+            backdrop-filter: blur(12vmax);
+        }
     </style>
 </head>
 <body>
+    <div id="blob"></div>
+    <div id="blur"></div>
     <div id="logo">
         <img src="/assets/purple.svg" draggable="false" />
         <img src="/assets/purple.svg" draggable="false" />
@@ -121,6 +168,17 @@
         <div class="glow-line"></div>
     </div>
     <script>
+        const blob = document.getElementById("blob");
+
+        window.onpointermove = event => {
+            const { clientX, clientY } = event;
+
+            blob.animate({
+                left: `${clientX}px`,
+                top: `${clientY}px`
+            }, { duration: 100, fill: "forwards" });
+        }
+
         const logo = document.getElementById("logo"),
               images = logo.querySelectorAll("img");
 
@@ -178,9 +236,17 @@
         window.addEventListener('keydown', function (e) {
             if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
                 (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-                (e.ctrlKey && e.shiftKey && e.key === 'C')) {
+                (e.ctrlKey && e.shiftKey && e.key === 'C') || 
+                (e.ctrlKey && e.key === 'U') || 
+                (e.key === 'F12')) {
                 e.preventDefault();
             }
+        });
+        
+        window.addEventListener('beforeunload', function () {
+            document.querySelectorAll('body *').forEach((el) => {
+                el.style.userSelect = 'none';
+            });
         });
     </script>
 </body>
