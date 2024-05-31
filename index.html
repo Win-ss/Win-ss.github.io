@@ -21,7 +21,7 @@
 
         #logo {
             position: relative;
-            width: 20vmin;
+            width: 30vmin;
             aspect-ratio: 1;
             margin-bottom: 2rem;
             user-select: none;
@@ -45,6 +45,9 @@
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 50%;
+            max-width: 600px; 
+            max-height: 80vh; 
+            overflow-y: auto;
             z-index: 10;
             user-select: none;
         }
@@ -161,6 +164,24 @@
             }
         }
 
+        @keyframes spinAround {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(80vw, 0) rotate(90deg);
+            }
+            50% {
+                transform: translate(80vw, 80vh) rotate(180deg);
+            }
+            75% {
+                transform: translate(0, 80vh) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
         #blob {
             height: 34vmax;
             aspect-ratio: 1;
@@ -174,6 +195,10 @@
             z-index: 1;
         }
 
+        #blob.mobile {
+            animation: spinAround 5s infinite linear, gradientAnimation 5s infinite;
+        }
+
         #blur {
             height: 100%;
             width: 100%;
@@ -182,10 +207,26 @@
             backdrop-filter: blur(12vmax);
         }
 
-        /* Hide blob and blur on small screens */
         @media (max-width: 768px) {
-            #blob, #blur {
-                display: none;
+            .center-box {
+                width: 75%; 
+                max-width: 90%; 
+                max-height: 80vh; 
+                overflow-y: auto; 
+            }
+
+            .button {
+                width: 20vmin; 
+                height: 20vmin; 
+                font-size: 1rem; 
+            }
+
+            #blob.mobile {
+                animation: spinAround 4s infinite linear, gradientAnimation 5s infinite;
+            }
+
+            #blur.mobile {
+                backdrop-filter: blur(2vmax);
             }
         }
     </style>
@@ -222,7 +263,7 @@
             <img src="/assets/snake.svg" alt="snake">
             </a>
             <a href="https://youtube.com" class="button">
-            <img src="/assets/youtube.svg" alt="            YouTube">
+            <img src="/assets/youtube.svg" alt="YouTube">
         </a>
     </div>
     <div class="glow-line"></div>
@@ -233,12 +274,19 @@
 
     const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
-    if (!isMobile) {
+    if (isMobile) {
+        const logo = document.getElementById('logo');
+        logo.innerHTML = '<img src="/assets/wcmobile.svg" draggable="false" />';
+        
+        blob.classList.add('mobile');
+
+        document.getElementById('blur').classList.add('mobile');
+    } else {
         window.onpointermove = event => {
             const { clientX, clientY } = event;
             const rect = centerBox.getBoundingClientRect();
 
-            if (clientX > rect.left && clientX < rect.right && clientY > rect.top && clientY < rect.bottom) {
+            if (clientX > rect.left && clientX < rect.right && clientY < rect.bottom) {
                 blob.style.opacity = '0';
             } else {
                 blob.style.opacity = '0.25';
@@ -248,58 +296,52 @@
                 }, { duration: 100, fill: "forwards" });
             }
         }
-    } else {
-        // Remove the blob and blur elements for mobile devices
-        blob.remove();
-        document.getElementById('blur').remove();
-    }
 
-    const logo = document.getElementById("logo"),
-          images = logo.querySelectorAll("img");
+        const logo = document.getElementById("logo"),
+              images = logo.querySelectorAll("img");
 
-    const shift = (image, index, rangeX, rangeY) => {
-        const translationIntensity = 4,
-              maxTranslation = translationIntensity * (index + 1),
-              currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
+        const shift = (image, index, rangeX, rangeY) => {
+            const translationIntensity = 4,
+                  maxTranslation = translationIntensity * (index + 1),
+                  currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
 
-        const scale = 1;
+            const scale = 1;
 
-        image.animate({
-            translate: currentTranslation,
-            scale
-        }, { duration: 750, fill: "forwards", easing: "ease" });
-    }
+            image.animate({
+                translate: currentTranslation,
+                scale
+            }, { duration: 750, fill: "forwards", easing: "ease" });
+        }
 
-    const shiftAll = (images, rangeX, rangeY) =>
-        images.forEach((image, index) => shift(image, index, rangeX, rangeY));
+        const shiftAll = (images, rangeX, rangeY) =>
+            images.forEach((image, index) => shift(image, index, rangeX, rangeY));
 
-    const shiftLogo = (e, images) => {
-        const rect = logo.getBoundingClientRect(),
-              radius = 1000;
+        const shiftLogo = (e, images) => {
+            const rect = logo.getBoundingClientRect(),
+                  radius = 1000;
 
-        const centerX = rect.left + (rect.width / 2),
-              centerY = rect.top + (rect.height / 2);
+            const centerX = rect.left + (rect.width / 2),
+                  centerY = rect.top + (rect.height / 2);
 
-        const rangeX = (e.clientX - centerX) / radius,
-              rangeY = (e.clientY - centerY) / radius;
+            const rangeX = (e.clientX - centerX) / radius,
+                  rangeY = (e.clientY - centerY) / radius;
 
-        shiftAll(images, rangeX, rangeY);
-    }
+            shiftAll(images, rangeX, rangeY);
+        }
 
-    const resetLogo = () => {
-        shiftAll(images, 0.1, -1);
-    }
+        const resetLogo = () => {
+            shiftAll(images, 0.1, -1);
+        }
 
-    if (!isMobile) {
         window.onmousemove = e => shiftLogo(e, images);
-    }
 
-    document.body.onmouseleave = () => {
-        resetLogo();
-    }
+        document.body.onmouseleave = () => {
+            resetLogo();
+        }
 
-    window.onmousedown = e => {
-        shiftLogo(e, images);
+        window.onmousedown = e => {
+            shiftLogo(e, images);
+        }
     }
 
     window.addEventListener('contextmenu', function (e) {
