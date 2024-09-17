@@ -18,7 +18,6 @@
             position: relative;
             user-select: none;
         }
-
         #logo {
             position: relative;
             width: 30vmin;
@@ -27,16 +26,13 @@
             user-select: none;
             z-index: 10;
         }
-
         #logo > img {
             width: 100%;
             position: absolute;
         }
-
         #logo > img:last-child {
             transform: translateY(0%);
         }
-
         .center-box {
             position: relative;
             background-color: #fff;
@@ -45,19 +41,14 @@
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 50%;
-            max-width: 600px; 
-            max-height: 80vh; 
-            overflow-y: auto;
             z-index: 10;
             user-select: none;
         }
-
         .center-box h1, .center-box h2 {
             margin: 1rem 0; 
             color: #000;
             font-size: 2rem; 
         }
-
         .buttons {
             margin-top: 1rem; 
             margin-bottom: 2rem; 
@@ -65,7 +56,6 @@
             justify-content: center; 
             flex-wrap: wrap;
         }
-
         .button {
             display: inline-flex;
             align-items: center;
@@ -83,16 +73,13 @@
             user-select: none;
             position: relative;
         }
-
         .button:hover {
             border-color: #8A57FC;
         }
-
         .button img {
             width: 100%;
             height: 100%;
         }
-
         .tooltip {
             display: none;
             position: absolute;
@@ -108,11 +95,9 @@
             z-index: 20;
             border: 1px solid #8A57FC;
         }
-
         .button:hover .tooltip {
             display: block;
         }
-
         .glow-line {
             position: absolute;
             top: 0;
@@ -124,7 +109,6 @@
             animation: glow 2s infinite;
             pointer-events: none;
         }
-
         @keyframes glow {
             0%, 100% {
                 box-shadow: 0 0 20px 5px #8A57FC;
@@ -133,7 +117,6 @@
                 box-shadow: 0 0 40px 10px #8A57FC;
             }
         }
-
         @keyframes rotate {
             from {
                 rotate: 0deg;
@@ -148,7 +131,6 @@
                 opacity: 0.45;
             }
         }
-
         @keyframes gradientAnimation {
             0% {
                 background: linear-gradient(to right, #8A57FC, #9567FC);
@@ -163,25 +145,6 @@
                 background: linear-gradient(to right, #AD89FC, #8A57FC);
             }
         }
-
-        @keyframes spinAround {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(80vw, 0) rotate(90deg);
-            }
-            50% {
-                transform: translate(80vw, 80vh) rotate(180deg);
-            }
-            75% {
-                transform: translate(0, 80vh) rotate(270deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
-        }
-
         #blob {
             height: 34vmax;
             aspect-ratio: 1;
@@ -194,11 +157,6 @@
             opacity: 0.45;
             z-index: 1;
         }
-
-        #blob.mobile {
-            animation: spinAround 5s infinite linear, gradientAnimation 5s infinite;
-        }
-
         #blur {
             height: 100%;
             width: 100%;
@@ -206,35 +164,17 @@
             z-index: 2;
             backdrop-filter: blur(12vmax);
         }
-
+        /* Hide blob and blur on small screens */
         @media (max-width: 768px) {
-            .center-box {
-                width: 75%; 
-                max-width: 90%; 
-                max-height: 80vh; 
-                overflow-y: auto; 
-            }
-
-            .button {
-                width: 20vmin; 
-                height: 20vmin; 
-                font-size: 1rem; 
-            }
-
-            #blob.mobile {
-                animation: spinAround 4s infinite linear, gradientAnimation 5s infinite;
-            }
-
-            #blur.mobile {
-                backdrop-filter: blur(2vmax);
+            #blob, #blur {
+                display: none;
             }
         }
     </style>
-        <link rel="icon" href="/assets/lightfavicon.png" type="image/png" media="(prefers-color-scheme: light)">
-        <link rel="icon" href="/assets/darkfavicon.png" type="image/png" media="(prefers-color-scheme: dark)">
     <meta property="og:title" content="Winss Cloud">
     <meta property="og:description" content="Welcome to my site! It's being worked on constantly so things will change">
-    <meta property="og:image" content="https://winss.cloud/assets/wc.gif"> 
+    <meta property="og:image" content="https://winss.cloud/assets/Winsscloud.svg"> 
+    <meta property="og:image:alt" content="https://winss.cloud/assets/wc.png"> 
     <meta property="og:url" content="https://winss.cloud"> 
     <meta property="og:type" content="website">
 </head>
@@ -263,7 +203,7 @@
             <img src="/assets/snake.svg" alt="snake">
             </a>
             <a href="https://youtube.com" class="button">
-            <img src="/assets/youtube.svg" alt="YouTube">
+            <img src="/assets/youtube.svg" alt="            YouTube">
         </a>
     </div>
     <div class="glow-line"></div>
@@ -271,22 +211,12 @@
 <script>
     const blob = document.getElementById("blob");
     const centerBox = document.querySelector('.center-box');
-
     const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-
-    if (isMobile) {
-        const logo = document.getElementById('logo');
-        logo.innerHTML = '<img src="/assets/wcmobile.svg" draggable="false" />';
-        
-        blob.classList.add('mobile');
-
-        document.getElementById('blur').classList.add('mobile');
-    } else {
+    if (!isMobile) {
         window.onpointermove = event => {
             const { clientX, clientY } = event;
             const rect = centerBox.getBoundingClientRect();
-
-            if (clientX > rect.left && clientX < rect.right && clientY < rect.bottom) {
+            if (clientX > rect.left && clientX < rect.right && clientY > rect.top && clientY < rect.bottom) {
                 blob.style.opacity = '0';
             } else {
                 blob.style.opacity = '0.25';
@@ -296,58 +226,49 @@
                 }, { duration: 100, fill: "forwards" });
             }
         }
-
-        const logo = document.getElementById("logo"),
-              images = logo.querySelectorAll("img");
-
-        const shift = (image, index, rangeX, rangeY) => {
-            const translationIntensity = 4,
-                  maxTranslation = translationIntensity * (index + 1),
-                  currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
-
-            const scale = 1;
-
-            image.animate({
-                translate: currentTranslation,
-                scale
-            }, { duration: 750, fill: "forwards", easing: "ease" });
-        }
-
-        const shiftAll = (images, rangeX, rangeY) =>
-            images.forEach((image, index) => shift(image, index, rangeX, rangeY));
-
-        const shiftLogo = (e, images) => {
-            const rect = logo.getBoundingClientRect(),
-                  radius = 1000;
-
-            const centerX = rect.left + (rect.width / 2),
-                  centerY = rect.top + (rect.height / 2);
-
-            const rangeX = (e.clientX - centerX) / radius,
-                  rangeY = (e.clientY - centerY) / radius;
-
-            shiftAll(images, rangeX, rangeY);
-        }
-
-        const resetLogo = () => {
-            shiftAll(images, 0.1, -1);
-        }
-
-        window.onmousemove = e => shiftLogo(e, images);
-
-        document.body.onmouseleave = () => {
-            resetLogo();
-        }
-
-        window.onmousedown = e => {
-            shiftLogo(e, images);
-        }
+    } else {
+        // Remove the blob and blur elements for mobile devices
+        blob.remove();
+        document.getElementById('blur').remove();
     }
-
+    const logo = document.getElementById("logo"),
+          images = logo.querySelectorAll("img");
+    const shift = (image, index, rangeX, rangeY) => {
+        const translationIntensity = 4,
+              maxTranslation = translationIntensity * (index + 1),
+              currentTranslation = `${maxTranslation * rangeX}% ${maxTranslation * rangeY}%`;
+        const scale = 1;
+        image.animate({
+            translate: currentTranslation,
+            scale
+        }, { duration: 750, fill: "forwards", easing: "ease" });
+    }
+    const shiftAll = (images, rangeX, rangeY) =>
+        images.forEach((image, index) => shift(image, index, rangeX, rangeY));
+    const shiftLogo = (e, images) => {
+        const rect = logo.getBoundingClientRect(),
+              radius = 1000;
+        const centerX = rect.left + (rect.width / 2),
+              centerY = rect.top + (rect.height / 2);
+        const rangeX = (e.clientX - centerX) / radius,
+              rangeY = (e.clientY - centerY) / radius;
+        shiftAll(images, rangeX, rangeY);
+    }
+    const resetLogo = () => {
+        shiftAll(images, 0.1, -1);
+    }
+    if (!isMobile) {
+        window.onmousemove = e => shiftLogo(e, images);
+    }
+    document.body.onmouseleave = () => {
+        resetLogo();
+    }
+    window.onmousedown = e => {
+        shiftLogo(e, images);
+    }
     window.addEventListener('contextmenu', function (e) {
         e.preventDefault();
     });
-
     window.addEventListener('keydown', function (e) {
         if ((e.ctrlKey && e.shiftKey && e.key === 'I') ||
             (e.ctrlKey && e.shiftKey && e.key === 'J') ||
@@ -357,7 +278,6 @@
             e.preventDefault();
         }
     });
-
     window.addEventListener('beforeunload', function () {
         document.querySelectorAll('body *').forEach((el) => {
             el.style.userSelect = 'none';
